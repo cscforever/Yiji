@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/ten.act.countdown.textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/black"
+            android:textSize="22pt" />
+
+        <Button
+            android:id="@+id/EngToChn.pronounce"
+            android:layout_width="62dip"
+            android:layout_height="62dip"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dip"
+            android:layout_weight="1"
+            android:background="@drawable/pronouce_bg" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/ten.act.tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="40dip"
+        android:layout_marginTop="15dip"
+        android:text="fresh"
+        android:textColor="@color/black"
+        android:textSize="22pt" />
+
+    <LinearLayout
+        android:id="@+id/listLinearLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@id/android:list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:drawSelectorOnTop="true"
+            android:scrollbars="vertical" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World!</string>
+    <string name="app_name">易记</string>
+    <string name="tenActivity">易记</string>
+    <string name="english">背单词</string>
+    <string name="jap">查单词</string>
+    <string name="ger">关于</string>
+    <string name="save">保存到文件</string>
+    <string name="notYetJap">查单词</string>
+    <string name="notYetGer">作者太懒了，不想写</string>
+    <string name="backspace">&lt;------</string>
+    <string name="undone">标记为未学</string>
+    <string name="done">标记为已学</string>
+    <string name="startRecite">开始背诵</string>
+    <string name="unitTitle">(有*表示你已背过)</string>
+    
+</resources>

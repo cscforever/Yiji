@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <ViewFlipper
+        android:id="@+id/ViewFlipper01"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <RelativeLayout
+            android:id="@+id/library_mainrl"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/library_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/header" >
+
+                <ImageView
+                    android:id="@+id/library_titlenum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="260.0dip" />
+
+                <ProgressBar
+                    android:id="@+id/library_progressbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/library_workspacerl"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@+id/library_title" >
+
+                <ImageView
+                    android:id="@+id/library_background"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
+
+                 <com.zzq.activity.ScrollLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/ScrollLayoutTest"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" >
+                </com.zzq.activity.ScrollLayout>
+
+                <com.zzq.activity.PageControlView
+                    android:id="@+id/pageControl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true" >
+                </com.zzq.activity.PageControlView>
+                 
+            </RelativeLayout>
+        </RelativeLayout>
+    </ViewFlipper>
+
+</RelativeLayout>

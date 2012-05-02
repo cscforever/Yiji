@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="45.0dip"
+    android:layout_marginLeft="20.0dip"
+    android:layout_marginRight="20.0dip"
+    android:layout_marginTop="15.0dip"
+    android:background="@drawable/exercise_selection_back" 
+    >
+
+    <TextView
+        android:id="@+id/exercise_selection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="40.0dip"
+        android:text="TextView"
+        android:textColor="@color/textcolor" 
+        />
+
+
+</RelativeLayout>
