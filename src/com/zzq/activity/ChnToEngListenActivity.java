@@ -73,6 +73,7 @@ public class ChnToEngListenActivity extends Activity {
 		});
 		Button proButton;
 		proButton = (Button) findViewById(R.id.spell_pronounce);
+		proButton.setBackgroundResource(R.drawable.pronouce_bg);
 		proButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {

@@ -19,7 +19,7 @@ public class WrongAnswerActivity extends Activity {
 		appState.addActivity(this);
 		setContentView(R.layout.spell_activity);
 		setTitle("你选错了.");
-		
+
 		findView();
 		Speak.init(Constant.getCurrentWord().getNameString(), this);
 
@@ -65,7 +65,7 @@ public class WrongAnswerActivity extends Activity {
 
 		Button proButton;
 		proButton = (Button) findViewById(R.id.spell_pronounce);
-		proButton.setBackgroundResource(R.drawable.pro_bg);
+		proButton.setBackgroundResource(R.drawable.pronouce_bg);
 		proButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {

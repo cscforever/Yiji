@@ -80,6 +80,7 @@ public class ChnToEngActivity extends Activity {
 
 			}
 		});
+		
 		// buttons on the bottom
 		Button resetButton, nextButton;
 		resetButton = (Button) findViewById(R.id.rd_1);
