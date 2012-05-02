@@ -18,6 +18,8 @@ public class WrongAnswerActivity extends Activity {
 		MyApp appState = (MyApp) getApplicationContext();
 		appState.addActivity(this);
 		setContentView(R.layout.spell_activity);
+		setTitle("你选错了.");
+		
 		findView();
 		Speak.init(Constant.getCurrentWord().getNameString(), this);
 

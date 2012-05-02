@@ -47,7 +47,6 @@ public class EngToChnListenActivity extends ListActivity {
 			public void handleMessage(android.os.Message msg) {
 				if (msg.what == -100) {
 					gotoWrongAnswer();
-
 				} else
 					countDownTextView.setText("" + msg.what);
 			};
