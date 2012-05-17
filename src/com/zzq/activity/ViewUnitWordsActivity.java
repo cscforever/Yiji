@@ -61,6 +61,10 @@ public class ViewUnitWordsActivity extends ListActivity {
 			}
 		});
 
+		FetchMp3Thread thread = new FetchMp3Thread();
+		thread.isBunch = true;
+		thread.start();
+
 	}
 
 	public boolean onKeyUp(int keyCode, KeyEvent event) {

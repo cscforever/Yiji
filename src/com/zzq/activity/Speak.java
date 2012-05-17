@@ -1,6 +1,9 @@
 package com.zzq.activity;
 
+import java.io.File;
 import java.util.Locale;
+
+import player.MyPlayer;
 
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
@@ -16,23 +19,42 @@ public class Speak {
 	static private SpeachListener speachListener = new SpeachListener();
 
 	static void init(String str, Context context) {
-		try {
-			string = str;
-			myContext = context;
-			mSpeech = new TextToSpeech(context, speachListener);
-		} catch (Exception e) {
-			Toast.makeText(context, "pronounce failed", 500).show();
-			e.printStackTrace();
+
+		String fileString = Constant.getMp3LocationString(str);
+		if (fileString != null && new File(fileString).exists()) {
+
+			new MyPlayer(fileString);
+		} else {
+
+			try {
+				string = str;
+				myContext = context;
+				mSpeech = new TextToSpeech(context, speachListener);
+			} catch (Exception e) {
+				Toast.makeText(context, "pronounce failed", 500).show();
+				e.printStackTrace();
+			}
 		}
+
 	}
 
 	static boolean speak(String str) {
+
+		String fileString = Constant.getMp3LocationString(str);
+		if (fileString != null && new File(fileString).exists()) {
+
+			new MyPlayer(fileString);
+
+			return true;
+		}
+
 		if (mSpeech != null) {
 			if (!mSpeech.isSpeaking()) {
 				mSpeech.speak(string, TextToSpeech.QUEUE_FLUSH, null);
 			}
 			return true;
 		}
+
 		return false;
 	}
 

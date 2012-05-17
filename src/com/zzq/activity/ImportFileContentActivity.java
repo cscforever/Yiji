@@ -12,6 +12,7 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -103,9 +104,35 @@ public class ImportFileContentActivity extends ListActivity {
 
 			}
 		});
+
+		new Thread() {
+			public void run() {
+				LinkedList<String> danciList = ImportWord
+						.getXmlList(fileContentString);
+				wordStructures_scope_marco = getWordStructures(danciList);
+				xmlList_scope_marco = ImportWord.getXmlList(
+						wordStructures_scope_marco, 100);
+				
+				handler.sendEmptyMessage(0);
+
+				isDone = true;
+			};
+		}.start();
+		
+		handler = new Handler(){
+			public void handleMessage(android.os.Message msg) {
+				
+				setListAdapter(wordStructures_scope_marco);
+				
+			};
+		};
+
 	}
 
-	// private boolean isPreview;
+	private Handler handler ;
+	private LinkedList<WordStructure> wordStructures_scope_marco;
+	private LinkedList<String> xmlList_scope_marco;
+	private boolean isDone = false;
 
 	private void makeDialogPreview() {
 
@@ -120,10 +147,12 @@ public class ImportFileContentActivity extends ListActivity {
 						// isPreview = true;
 
 						if (isAllEng) {
+
 							LinkedList<String> danciList = ImportWord
 									.getXmlListWithLengthLimit(
 											fileContentString, 10);
 							LinkedList<WordStructure> wordStructures = getWordStructures(danciList);
+
 							setListAdapter(wordStructures);
 						} else {
 							// TODO
@@ -272,14 +301,14 @@ public class ImportFileContentActivity extends ListActivity {
 	private boolean startImport_AllEng() {
 
 		try {
-			LinkedList<String> danciList = ImportWord
-					.getXmlList(fileContentString);
-			LinkedList<WordStructure> wordStructures = getWordStructures(danciList);
 
-			LinkedList<String> xmlList = ImportWord.getXmlList(wordStructures,
-					100);
-			setListAdapter(wordStructures);
-			ImportWord.writeToFileFromXmlList(xmlList, prefixString);
+			while (!isDone) {
+			}
+
+			setListAdapter(wordStructures_scope_marco);
+			ImportWord
+					.writeToFileFromXmlList(xmlList_scope_marco, prefixString);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 

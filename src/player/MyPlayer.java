@@ -1,5 +1,7 @@
 package player;
 
+import java.io.FileDescriptor;
+
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -29,8 +31,12 @@ public class MyPlayer {
 		}
 	}
 
+	
+	
+	
 	public MyPlayer(String url) {
 		try {
+			
 			mediaPlayer.setDataSource(url);
 
 			mediaPlayer.prepare();

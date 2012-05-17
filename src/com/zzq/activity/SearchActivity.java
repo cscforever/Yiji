@@ -5,13 +5,11 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import utils.FileUtils;
+import utils.WordUrl;
 import Model.WordStructure;
-import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -25,9 +23,12 @@ import android.text.format.DateFormat;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import dict.LocalDictReaderContainer;
@@ -125,7 +126,6 @@ public class SearchActivity extends Activity {
 						+ "\n</meaning>\n</word>\n";
 				outXml += "\n</wordsList>";
 			} else {
-				// TODO
 				List<WordStructure> wordList = new Word()
 						.getListFromXmlFile(fileName);
 
@@ -207,6 +207,8 @@ public class SearchActivity extends Activity {
 	}
 
 	private ArrayAdapter<String> adapter;
+	private ProgressBar progressBar;
+	private String suggestString = "";
 
 	private void findView() {
 		proButton = (Button) findViewById(R.id.search_pro);
@@ -226,18 +228,38 @@ public class SearchActivity extends Activity {
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
 
+				suggestString = null;
+
 				System.out.println(".............text changed");
 				String suggests[] = getSuggests(editText.getText().toString());
 				if (suggests == null) {
 					System.out.println("null     suggest");
 					suggests = new String[1];
 					suggests[0] = editText.getText().toString();
+				} else {
+					suggestString = suggests[0];
 				}
 				System.out.println(Arrays.toString(suggests));
 				adapter = new ArrayAdapter<String>(SearchActivity.this,
 						android.R.layout.simple_dropdown_item_1line, suggests);
 				editText.setAdapter(adapter);
 				SearchActivity.this.editText.setThreshold(0);
+				// TODO
+				editText.setOnItemClickListener(new OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> arg0, View arg1,
+							int arg2, long arg3) {
+						// TODO Auto-generated method stub
+						if (suggestString != null) {
+							findMp3File(suggestString);
+
+						}
+
+					}
+
+				});
+				searchButtonPressed(false);
 
 			}
 		});
@@ -245,11 +267,17 @@ public class SearchActivity extends Activity {
 		textView = (TextView) findViewById(R.id.search_textview);
 		textView.setMovementMethod(new ScrollingMovementMethod());
 
+		progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+
 		searchButton = (Button) findViewById(R.id.search_cls);
 		searchButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				searchButtonPressed();
+
+				progressBar.setVisibility(View.VISIBLE);
+				searchButton.setVisibility(View.GONE);
+
+				searchButtonPressed(true);
 			}
 		});
 
@@ -280,7 +308,7 @@ public class SearchActivity extends Activity {
 		});
 	}
 
-	private void searchButtonPressed() {
+	private void searchButtonPressed(boolean isWebSearch) {
 		String meaningForDisPlay = "";
 
 		meaningForDisPlay = "";
@@ -318,21 +346,59 @@ public class SearchActivity extends Activity {
 				textView.setText("cant find definition in local dict");
 			}
 		}
-		NetworkInfo localNetworkInfo = ((ConnectivityManager) SearchActivity.this
-				.getSystemService("connectivity")).getActiveNetworkInfo();
 
-		if (localNetworkInfo == null || !localNetworkInfo.isConnected() // 网络是否已经连接
-		) {
-			Toast.makeText(SearchActivity.this, "no network", 200).show();
-		} else {
-			danci = editText.getText().toString();
-			if (danci.length() != 0) {
-				Intent intent = new Intent(SearchActivity.this,
-						SearchWordLoadingActivity.class);
-				intent.putExtra("danci", danci);
-				startActivityForResult(intent, 0);
+		if (isWebSearch) {
+			NetworkInfo localNetworkInfo = ((ConnectivityManager) SearchActivity.this
+					.getSystemService("connectivity")).getActiveNetworkInfo();
+
+			if (localNetworkInfo == null || !localNetworkInfo.isConnected() // 网络是否已经连接
+			) {
+				Toast.makeText(SearchActivity.this, "no network", 200).show();
+			} else {
+				danci = editText.getText().toString();
+				if (danci.length() != 0) {
+					// Intent intent = new Intent(SearchActivity.this,
+					// SearchWordLoadingActivity.class);
+					// intent.putExtra("danci", danci);
+					// startActivityForResult(intent, 0);
+
+					String meaning = new WordUrl(danci).getMeaning();
+					textView.setText(Html.fromHtml(meaning));
+
+					if (suggestString != null) {
+						findMp3File(suggestString);
+					}
+				}
 			}
+
+			try {
+				Thread.sleep(500);
+
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+
+			progressBar.setVisibility(View.GONE);
+			searchButton.setVisibility(View.VISIBLE);
 		}
+
+	}
+
+	private boolean isFinished = true;
+
+	private void findMp3File(String wordName) {
+
+		if (isFinished) {
+			isFinished = false;
+			FetchMp3Thread thread = new FetchMp3Thread();
+			thread.wordName = wordName;
+			thread.start();
+
+			while (!thread.isFinished) {
+			}
+			isFinished = true;
+		}
+
 	}
 
 	@Override

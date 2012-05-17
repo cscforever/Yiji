@@ -16,10 +16,10 @@ public class SearchWordLoadingActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		mGameView = new GameView(this);
 		setContentView(mGameView);
 		// play mp3
-		mp3NmaeString = getResources().openRawResourceFd(R.raw.xiaoxin);
 		danci = getIntent().getExtras().getString("danci");
 		
 		new Thread() {

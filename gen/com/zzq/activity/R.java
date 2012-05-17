@@ -169,14 +169,14 @@ public final class R {
         public static final int wood_bg_160_org=0x7f02004c;
     }
     public static final class id {
-        public static final int EngToChn_pronounce=0x7f090020;
+        public static final int EngToChn_pronounce=0x7f090021;
         public static final int ScrollLayoutTest=0x7f09000f;
         public static final int ViewFlipper01=0x7f090008;
         public static final int book_textView1=0x7f090001;
         public static final int book_book=0x7f090000;
         public static final int content_textview=0x7f090002;
         public static final int eng_button=0x7f090005;
-        public static final int exercise_selection=0x7f090023;
+        public static final int exercise_selection=0x7f090024;
         public static final int ger_button=0x7f090007;
         public static final int jap_button=0x7f090006;
         public static final int library_background=0x7f09000e;
@@ -185,30 +185,31 @@ public final class R {
         public static final int library_title=0x7f09000a;
         public static final int library_titlenum=0x7f09000b;
         public static final int library_workspacerl=0x7f09000d;
-        public static final int listLinearLayout=0x7f090022;
+        public static final int listLinearLayout=0x7f090023;
         public static final int pageControl=0x7f090010;
+        public static final int progressBar1=0x7f090013;
         public static final int rd_1=0x7f090003;
         public static final int rd_2=0x7f090004;
-        public static final int relativeLayout1=0x7f09001a;
-        public static final int search_addToNewWords=0x7f090014;
+        public static final int relativeLayout1=0x7f09001b;
+        public static final int search_addToNewWords=0x7f090015;
         public static final int search_cls=0x7f090012;
         public static final int search_edit=0x7f090011;
-        public static final int search_pro=0x7f090013;
-        public static final int search_textview=0x7f090015;
-        public static final int speak_button=0x7f09001b;
-        public static final int speaken_button=0x7f09001c;
-        public static final int spell_back=0x7f090016;
-        public static final int spell_back_btn=0x7f09001e;
-        public static final int spell_countdown_text=0x7f09001d;
-        public static final int spell_danciText=0x7f090019;
-        public static final int spell_meaningText=0x7f090018;
-        public static final int spell_pronounce=0x7f090017;
-        public static final int spinner1=0x7f090024;
-        public static final int ten_act_countdown_textview=0x7f09001f;
-        public static final int ten_act_tv=0x7f090021;
-        public static final int unit_words_start_button=0x7f090025;
-        public static final int wordlist_spinner1=0x7f090026;
-        public static final int wordlist_spinner2=0x7f090027;
+        public static final int search_pro=0x7f090014;
+        public static final int search_textview=0x7f090016;
+        public static final int speak_button=0x7f09001c;
+        public static final int speaken_button=0x7f09001d;
+        public static final int spell_back=0x7f090017;
+        public static final int spell_back_btn=0x7f09001f;
+        public static final int spell_countdown_text=0x7f09001e;
+        public static final int spell_danciText=0x7f09001a;
+        public static final int spell_meaningText=0x7f090019;
+        public static final int spell_pronounce=0x7f090018;
+        public static final int spinner1=0x7f090025;
+        public static final int ten_act_countdown_textview=0x7f090020;
+        public static final int ten_act_tv=0x7f090022;
+        public static final int unit_words_start_button=0x7f090026;
+        public static final int wordlist_spinner1=0x7f090027;
+        public static final int wordlist_spinner2=0x7f090028;
     }
     public static final class layout {
         public static final int book=0x7f030000;

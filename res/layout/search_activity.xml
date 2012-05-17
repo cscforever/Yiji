@@ -21,15 +21,29 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="8pt" />
 
-        <Button
-            android:id="@+id/search.cls"
+        <FrameLayout
             android:layout_width="62dip"
             android:layout_height="62dip"
             android:layout_marginBottom="20dip"
             android:layout_marginLeft="13dip"
-            android:layout_marginTop="20dip"
-            android:background="@drawable/search_button_bg" >
-        </Button>
+            android:layout_marginTop="20dip" >
+
+            <Button
+                android:id="@+id/search.cls"
+                android:layout_width="62dip"
+                android:layout_height="62dip"
+                android:layout_marginBottom="20dip"
+                android:layout_marginLeft="13dip"
+                android:layout_marginTop="20dip"
+                android:background="@drawable/search_button_bg" >
+            </Button>
+
+            <ProgressBar
+                android:id="@+id/progressBar1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:visibility="gone" />
+        </FrameLayout>
     </LinearLayout>
 
     <LinearLayout

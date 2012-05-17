@@ -1,5 +1,7 @@
 package com.zzq.activity;
 
+import java.io.File;
+
 import player.MyPlayer;
 import utils.Mp3Url;
 import android.content.Context;
@@ -15,29 +17,46 @@ public class PronouceCombined {
 
 	public static void pronouce(String str, Context context) {
 
-		NetworkInfo localNetworkInfo = ((ConnectivityManager) context
-				.getSystemService("connectivity")).getActiveNetworkInfo();
+		myStr = str;
 
-		if (localNetworkInfo == null || localNetworkInfo.getType() != 1) {
-			if (isNetworkLive == 0) {
-				Toast.makeText(context, "no network", 500).show();
-			}
-			if (!Speak.speak(str)) {
-				Speak.init(str, context);
-			}
-			isNetworkLive = 1;
+		String fileString = Constant.getMp3LocationString(myStr);
+		if (fileString != null && new File(fileString).exists()) {
+
+			new MyPlayer(fileString);
+
 		} else {
-			isNetworkLive = 1;
-			if (str.length() > 0) {
-				myStr = str;
-				thread = new Thread() {
-					public void run() {
-						String url = new Mp3Url(myStr).getMp3url_string();
-						if (url != null) {
+			NetworkInfo localNetworkInfo = ((ConnectivityManager) context
+					.getSystemService("connectivity")).getActiveNetworkInfo();
+
+			if (localNetworkInfo == null || localNetworkInfo.getType() != 1) {
+				if (isNetworkLive == 0) {
+					Toast.makeText(context, "no network", 500).show();
+				}
+				if (!Speak.speak(str)) {
+					Speak.init(str, context);
+				}
+				isNetworkLive = 1;
+			} else {
+				isNetworkLive = 1;
+				if (str.length() > 0) {
+					thread = new Thread() {
+						public void run() {
+							String url = new Mp3Url(myStr).getMp3url_string();
+							// if (url != null) {
+							// String fileString = Constant
+							// .getMp3LocationString(myStr);
+							// if (fileString != null
+							// && new File(fileString).exists()) {
+							// new MyPlayer(fileString);
+							// } else {
+
 							new MyPlayer(url);
+
+							// }
 						}
 					};
-				};
+				}
+				;
 				thread.start();
 			}
 		}
