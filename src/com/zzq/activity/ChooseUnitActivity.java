@@ -21,7 +21,7 @@ import android.widget.SimpleAdapter;
 
 public class ChooseUnitActivity extends ListActivity {
 
-	private final int numberOfWordsPerUnit = 5;
+	private final int numberOfWordsPerUnit = 10;
 	private int unitPosition;
 
 	@Override
@@ -117,18 +117,32 @@ public class ChooseUnitActivity extends ListActivity {
 		setListAdapter();
 	}
 
+	private boolean isAlreadyThere(List<WordStructure> tempList,
+			WordStructure tmpWordStructure) {
+		for (int i = 0; i < tempList.size(); i++) {
+			if (tempList.get(i).getNameString()
+					.equalsIgnoreCase(tmpWordStructure.getNameString())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private void startLearn(int position) {
 		List<WordStructure> tempList = new ArrayList<WordStructure>();
 
 		for (int i = 0; i < numberOfWordsPerUnit
 				&& position * numberOfWordsPerUnit + i < Constant.totalWordList
 						.size(); i++) {
-			tempList.add(Constant.totalWordList.get(position
-					* numberOfWordsPerUnit + i));
+			WordStructure tmpWordStructure = Constant.totalWordList
+					.get(position * numberOfWordsPerUnit + i);
+			if (!isAlreadyThere(tempList, tmpWordStructure)) {
+				tempList.add(tmpWordStructure);
+			}
 		}
+		
 		Constant.totalWordList = null;
 		Constant.wordList = tempList;
-
 		Constant.unit_number = position + 1;
 		Intent intent = new Intent(ChooseUnitActivity.this,
 				ViewUnitWordsActivity.class);

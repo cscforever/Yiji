@@ -1,5 +1,6 @@
 package utils;
 
+import android.os.Handler;
 
 public class WordUrl {
 	private String meaning;
@@ -14,6 +15,15 @@ public class WordUrl {
 		lrc = lrc.replaceAll("youdao", "yiji");
 		lrc = lrc.replaceAll("网易公司", "周卓潜出品");
 		meaning = lrc;
+
+	}
+
+	public WordUrl(String danci, Handler handler) {
+
+		this(danci);
+		if (handler!= null) {
+			handler.sendEmptyMessage(0);
+		}
 
 	}
 

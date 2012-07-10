@@ -16,6 +16,7 @@ import android.content.res.AssetManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -36,7 +37,7 @@ import dict.LocalDictReaderContainer;
 public class SearchActivity extends Activity {
 	// private boolean play = false;
 	// CheckBox checkBox = null;
-	// Handler handler;
+	Handler handler;
 	private Button proButton, searchButton, addButton;
 	private AutoCompleteTextView editText;
 	private TextView textView;
@@ -274,9 +275,6 @@ public class SearchActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 
-				progressBar.setVisibility(View.VISIBLE);
-				searchButton.setVisibility(View.GONE);
-
 				searchButtonPressed(true);
 			}
 		});
@@ -306,6 +304,19 @@ public class SearchActivity extends Activity {
 				PronouceCombined.pronouce(tmp, SearchActivity.this);
 			}
 		});
+
+		handler = new Handler() {
+			public void handleMessage(android.os.Message msg) {
+
+				searchButton.setVisibility(View.VISIBLE);
+				progressBar.setVisibility(View.GONE);
+
+				if (meaning != null) {
+					textView.setText(Html.fromHtml(meaning));
+				}
+
+			};
+		};
 	}
 
 	private void searchButtonPressed(boolean isWebSearch) {
@@ -348,6 +359,7 @@ public class SearchActivity extends Activity {
 		}
 
 		if (isWebSearch) {
+
 			NetworkInfo localNetworkInfo = ((ConnectivityManager) SearchActivity.this
 					.getSystemService("connectivity")).getActiveNetworkInfo();
 
@@ -362,28 +374,28 @@ public class SearchActivity extends Activity {
 					// intent.putExtra("danci", danci);
 					// startActivityForResult(intent, 0);
 
-					String meaning = new WordUrl(danci).getMeaning();
-					textView.setText(Html.fromHtml(meaning));
+					progressBar.setVisibility(View.VISIBLE);
+					searchButton.setVisibility(View.GONE);
+
+					new Thread() {
+						public void run() {
+							meaning = new WordUrl(danci, handler).getMeaning();
+							handler.sendEmptyMessage(-1);
+						};
+					}.start();
 
 					if (suggestString != null) {
 						findMp3File(suggestString);
 					}
+
 				}
 			}
 
-			try {
-				Thread.sleep(500);
-
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-
-			progressBar.setVisibility(View.GONE);
-			searchButton.setVisibility(View.VISIBLE);
 		}
 
 	}
 
+	private String meaning;
 	private boolean isFinished = true;
 
 	private void findMp3File(String wordName) {

@@ -80,7 +80,7 @@ public class ChnToEngActivity extends Activity {
 
 			}
 		});
-		
+
 		// buttons on the bottom
 		Button resetButton, nextButton;
 		resetButton = (Button) findViewById(R.id.rd_1);
@@ -132,6 +132,7 @@ public class ChnToEngActivity extends Activity {
 			freashButtons();
 			setButtonsListener();
 			danciView.setText(Constant.getCurrentWord().getNameString());
+			danciView.setText("");
 			meaningView.setText(Constant.getCurrentWord().getMeanString());
 
 		} else if (Constant.getCurrentTicket().getReciteMode() == ReciteMode.ListenAndSpell) {

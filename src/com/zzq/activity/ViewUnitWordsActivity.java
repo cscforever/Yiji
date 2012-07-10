@@ -2,12 +2,16 @@ package com.zzq.activity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Random;
 
 import Model.ReciteMode;
 import Model.Ticket;
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,6 +19,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
@@ -39,6 +44,36 @@ public class ViewUnitWordsActivity extends ListActivity {
 		findView();
 	}
 
+	LinkedList<String> wordToDelArray = new LinkedList<String>();
+
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		// TODO Auto-generated method stub
+		super.onListItemClick(l, v, position, id);
+
+		if (position < Constant.wordList.size()) {
+			
+			String currentwordString = Constant.wordList.get(position)
+					.getNameString();
+			if (wordToDelArray.contains(currentwordString)) {
+				
+				for (int i = 0; i < wordToDelArray.size(); i++) {
+					if (wordToDelArray.get(i).equals(  currentwordString )) {
+						wordToDelArray.remove(currentwordString);
+						break;
+					}
+				}
+				
+			} else {
+				wordToDelArray.add(currentwordString);
+			}
+			
+			setListAdapter();
+			
+		}
+		
+	}
+
 	private void findView() {
 
 		Button startButton = (Button) findViewById(R.id.unit_words_start_button);
@@ -47,6 +82,18 @@ public class ViewUnitWordsActivity extends ListActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
+				
+				for (int i = 0; i < wordToDelArray.size() ; i++) {
+					String tmp = wordToDelArray.get(i);
+					for (int j = 0; j < Constant.wordList.size(); j++) {
+						if (Constant.wordList.get(j).getNameString().equals(tmp) ) {
+							Constant.wordList.remove(j);
+						}
+					}
+				}
+				
+				initTicketListFromWordList();
+
 				if (Constant.wordList.size() > 4) {
 					if (Constant.getCurrentTicket().getReciteMode() == ReciteMode.ChnToEng
 							|| Constant.getCurrentTicket().getReciteMode() == ReciteMode.ListenAndSpell) {
@@ -84,7 +131,6 @@ public class ViewUnitWordsActivity extends ListActivity {
 		// TODO Auto-generated method stub
 
 		setListAdapter();
-		initTicketListFromWordList();
 
 		super.onResume();
 	}
@@ -132,8 +178,13 @@ public class ViewUnitWordsActivity extends ListActivity {
 
 		for (int i = 0; i < Constant.wordList.size(); i++) {
 			Map<String, String> tmpMap = new HashMap<String, String>();
+			String tempString = Constant.wordList.get(i).getNameString();
+			if (wordToDelArray.contains(tempString)) {
+				tmpMap.put("danci", "--" + tempString);
+			} else {
+				tmpMap.put("danci", tempString);
+			}
 			tmpMap.put("meaning", Constant.wordList.get(i).getMeanString());
-			tmpMap.put("danci", Constant.wordList.get(i).getNameString());
 			tmpList.add(tmpMap);
 		}
 

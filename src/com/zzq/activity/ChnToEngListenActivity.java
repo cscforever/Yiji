@@ -131,6 +131,7 @@ public class ChnToEngListenActivity extends Activity {
 			setButtonsListener();
 			Speak.init(Constant.getCurrentWord().getNameString(), this);
 			danciView.setText(Constant.getCurrentWord().getNameString());
+			danciView.setText("");
 			meaningView.setText("");
 		} else if (Constant.getCurrentTicket().getReciteMode() == ReciteMode.ChnToEng) {
 
